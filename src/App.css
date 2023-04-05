@@ -5,4 +5,41 @@
 .grid {
 	display: grid;
 	grid-template-columns: 2fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	max-width: 500px;
+	margin: 4rem auto 0;
+	gap: 1rem;
+	background-color: lightblue;
+	padding: 1rem;
+	border: 0.5rem solid #0040a0;
+	border-radius: 1rem;
+}
+
+.grid > button, .grid > div {
+	border: 1px solid black;
+	border-radius: 0.25rem;
+	padding: 1rem 0;
+	font-size: 1.5rem;
+}
+
+#display {
+	grid-column: 1 / 5;
+	grid-row: 1 / 2;
+	background-color: #333;
+	color: white;
+	padding: 2rem;
+	text-align: right;
+}
+
+#clear {
+	grid-column: 1 / 3;
+}
+
+#equals {
+	grid-column: 4;
+	grid-row: 5 / 7;
+}
+
+#zero {
+	grid-column: 1 / 3;
 }

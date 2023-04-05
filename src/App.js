@@ -12,10 +12,10 @@ const calculatorButtons = {
 	five: 5,
 	six: 6,
 	plus: '+',
-	equals: '=',
 	one: 1,
 	two: 2,
 	three: 3,
+	equals: '=',
 	zero: 0,
 	decimal: '.'
 }
@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="App">
 			<div className="grid">
-				<div id="display" />
+				<div id="display">display</div>
 				{Object.keys(calculatorButtons).map((key) => {
 					return (
 						<button id={key} value={calculatorButtons[key]}>{calculatorButtons[key]}</button>
