@@ -25,7 +25,7 @@ function App() {
 				<div id="display" />
 				{Object.keys(calculatorButtons).map((key) => {
 					return (
-						<div id={key} value={calculatorButtons[key]}>{calculatorButtons[key]}</div>
+						<button id={key} value={calculatorButtons[key]}>{calculatorButtons[key]}</button>
 					)
 				})}
 			</div>
