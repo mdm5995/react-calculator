@@ -57,6 +57,12 @@ function App() {
 				return;
 		} 
 
+		if (event.target.value === '.' 
+			&& (calculation.length === 0 || isOperator(calculation[calculation.length - 1]))) {
+			setCalculation([...calculation, '0.']);
+			return;
+		}
+
 		// operator logic
 		if (isOperator(event.target.value)) {
 			// if calc is empty && isOperator, 
