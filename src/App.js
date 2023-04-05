@@ -47,6 +47,7 @@ function App() {
   return (
     <div className="App">
 			<div className="grid">
+				<div id="answer">{answer}</div>
 				<div id="display">{display}</div>
 				{Object.keys(calculatorButtons).map((key) => {
 					return (
