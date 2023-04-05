@@ -28,6 +28,7 @@ function App() {
 
 	const [calculation, setCalculation] = useState([]);
 	const [display, setDisplay] = useState('initial display');
+	const [answer, setAnswer] = useState('');
 
 	// on button press, relevant glyph is pushed to "calculation" array
 	// on equals button press, math.evaluate(calculation.concat())
@@ -37,7 +38,56 @@ function App() {
 	// if it is operator, replace it with new button press
 
 	const handleClick = (event) => {
-		setCalculation([...calculation, event.target.value]);
+		const isDigit = (string) => {
+			const regex = /\d+/;
+			return regex.test(string);
+		}
+		const isOperator = (string) => {
+			const regex = /[+-/\*]/;
+			return regex.test(string);
+		}
+
+		if (event.target.value === 'AC') {
+			setCalculation([]);
+			return;
+		}
+
+		if (isDigit(event.target.value)) {
+			setCalculation([...calculation, event.target.value]);
+				return;
+		} 
+
+		// operator logic
+		if (isOperator(event.target.value)) {
+			// if calc is empty && isOperator, 
+			// no operator possible except '-' as negative sign
+			if (calculation.length === 0 && event.target.value === '-') {
+				setCalculation([...calculation, event.target.value]);
+				return;
+			}
+			// if calc[-1] === operator && calc[-2] isDigit, 
+			// append minus, otherwise append nothing
+			if (
+				isOperator(calculation[calculation.length - 1]) 
+				&& isDigit(calculation[calculation.length - 2]) 
+				&& event.target.value === '-'
+			) {
+				setCalculation([...calculation, event.target.value]);
+				return;
+			}
+			// if calc[-1] !== operator, append operator
+			if (isDigit(calculation[calculation.length - 1])) {
+				setCalculation([...calculation, event.target.value]);
+				return;
+			}
+		}
+
+		if (event.target.value === '=' && calculation.length !== 0) {
+			const evaluatedCalculation = evaluate(calculation.join(''));
+			setAnswer(`${calculation.join('')} = ${evaluatedCalculation}`);
+			setCalculation([evaluatedCalculation]);
+			return;
+		}
 	};
 
 	useEffect(() => {
