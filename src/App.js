@@ -104,9 +104,14 @@ function App() {
 		}
 
 		if (event.target.value === '=' && calculation.length !== 0) {
-			const evaluatedCalculation = evaluate(calculation.join(''));
+			const evaluatedCalculation = parseFloat(evaluate(calculation.join('')));
 			setAnswer(`${calculation.join('')} = ${evaluatedCalculation}`);
 			setCalculation([evaluatedCalculation]);
+			// decimal logic
+			setCanDecimal(true);
+			if (!Number.isInteger(evaluatedCalculation)) {
+				setCanDecimal(false);
+			}
 			return;
 		}
 	};
