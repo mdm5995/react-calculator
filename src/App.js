@@ -26,7 +26,7 @@ const calculatorButtons = {
 
 function App() {
 
-	const [calculation, setCalculation] = useState([0]);
+	const [calculation, setCalculation] = useState(['0']);
 	// Tracks legality of decimal point
 	// changes false when a decimal is added
 	// changes to true when the next operator, AC or = is pressed
@@ -36,7 +36,7 @@ function App() {
 	// changes to false after any operator  (except '.') then a 0
 	// changes to true when the first 0 after an operator is added or AC / = is pressed
 	const [canZero, setCanZero] = useState(false);
-	const [display, setDisplay] = useState('initial display');
+	const [display, setDisplay] = useState(calculation);
 	const [answer, setAnswer] = useState('');
 
 	// on button press, relevant glyph is pushed to "calculation" array
@@ -47,20 +47,22 @@ function App() {
 	// if it is operator, replace it with new button press
 
 	const handleClick = (event) => {
+
+		if (event.target.value === 'AC') {
+			setCalculation(['0']);
+			setCanDecimal(true);
+			setCanZero(false);
+			return;
+		}
+
 		const isDigit = (string) => {
 			const regex = /\d+/;
 			return regex.test(string);
 		}
+
 		const isOperator = (string) => {
 			const regex = /[+-/\*\.]/;
 			return regex.test(string);
-		}
-
-		if (event.target.value === 'AC') {
-			setCalculation([0]);
-			setCanDecimal(true);
-			setCanZero(false);
-			return;
 		}
 
 		if (event.target.value === '0') {
@@ -80,6 +82,10 @@ function App() {
 
 		if (isDigit(event.target.value)) {
 			if (event.target.value !== '0') { setCanZero(true) };
+			if (calculation.join('') === '0') {
+				setCalculation([event.target.value]);
+				return;
+			}
 			setCalculation([...calculation, event.target.value]);
 			return;
 		} 
