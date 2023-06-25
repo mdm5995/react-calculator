@@ -78,6 +78,19 @@ function App() {
 
 		// operator logic
 		if (isOperator(event.target.value)) {
+			if (event.target.value === '.') {
+				if (canDecimal && isOperator(calculation.at(-1))) {
+					setCalculation([...calculation, '0.']);
+					setCanDecimal(false);
+					return;
+				} else if (canDecimal) {
+					setCalculation([...calculation, '.']);
+					setCanDecimal(false);
+					return;
+				}
+				// illegal decimal
+				return;
+			} 
 			// if calc is empty && isOperator, 
 			// no operator possible except '-' as negative sign
 			if (calculation.length === 0 && event.target.value === '-') {
