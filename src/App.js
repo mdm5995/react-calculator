@@ -53,6 +53,7 @@ function App() {
 
 		if (event.target.value === 'AC') {
 			setCalculation([]);
+			setCanDecimal(true);
 			return;
 		}
 
