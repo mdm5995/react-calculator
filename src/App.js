@@ -115,6 +115,16 @@ function App() {
 					setCanDecimal(true);
 					return;
 				}
+			} 
+			if (
+				calculation.at(-1) === '-'
+				&& isOperator(calculation.at(-2))
+				&& event.target.value !== ('.' | '-')
+				) {
+				let newCalculation = calculation.slice(0, calculation.length - 2);
+				setCalculation([...newCalculation, event.target.value]);
+				setCanDecimal(true);
+				return;
 			}
 			// if calc[-1] !== operator, append operator
 			if (isDigit(calculation[calculation.length - 1])) {
