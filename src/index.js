@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+// FCC test stuff
+/* import { render } from 'react-dom';
+
+render(<App />, document.getElementById('root'));
+*/
+// end FCC test stuff
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
