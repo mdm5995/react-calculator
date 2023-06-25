@@ -148,7 +148,9 @@ function App() {
 				<div id="display">{display}</div>
 				{Object.keys(calculatorButtons).map((key) => {
 					return (
-						<button key={key} id={key} onClick={handleClick} value={calculatorButtons[key]}>{calculatorButtons[key]}</button>
+						<button key={key} id={key} onClick={handleClick} value={calculatorButtons[key]}>
+							{calculatorButtons[key]}
+						</button>
 					)
 				})}
 			</div>
