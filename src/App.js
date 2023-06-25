@@ -26,11 +26,16 @@ const calculatorButtons = {
 
 function App() {
 
-	const [calculation, setCalculation] = useState([]);
+	const [calculation, setCalculation] = useState([0]);
 	// Tracks legality of decimal point
 	// changes false when a decimal is added
 	// changes to true when the next operator, AC or = is pressed
 	const [canDecimal, setCanDecimal] = useState(true);
+	// Tracks legality of zero, can't have more than 1 leading 0
+	// changes true when a digit or operator is added
+	// changes to false after any operator  (except '.') then a 0
+	// changes to true when the first 0 after an operator is added or AC / = is pressed
+	const [canZero, setCanZero] = useState(false);
 	const [display, setDisplay] = useState('initial display');
 	const [answer, setAnswer] = useState('');
 
@@ -52,32 +57,36 @@ function App() {
 		}
 
 		if (event.target.value === 'AC') {
-			setCalculation([]);
+			setCalculation([0]);
 			setCanDecimal(true);
+			setCanZero(false);
+			return;
+		}
+
+		if (event.target.value === '0') {
+			if (isOperator(calculation.at(-2))
+				&& calculation.at(-2) !== '.'
+				&& calculation.at(-1) === '0'
+				) {
+				setCanZero(false);
+				return;
+			}
+			if (canZero) {
+				setCalculation([...calculation, event.target.value]);
+				return;
+			}
 			return;
 		}
 
 		if (isDigit(event.target.value)) {
+			if (event.target.value !== '0') { setCanZero(true) };
 			setCalculation([...calculation, event.target.value]);
-			return;
-		} 
-
-		if (event.target.value === '.') {
-			if (canDecimal && isOperator(calculation.at(-1))) {
-				setCalculation([...calculation, '0.']);
-				setCanDecimal(false);
-				return;
-			} else if (canDecimal) {
-				setCalculation([...calculation, '.']);
-				setCanDecimal(false);
-				return;
-			}
-			// illegal decimal
 			return;
 		} 
 
 		// operator logic
 		if (isOperator(event.target.value)) {
+			setCanZero(true);
 			if (event.target.value === '.') {
 				if (canDecimal && isOperator(calculation.at(-1))) {
 					setCalculation([...calculation, '0.']);
@@ -103,7 +112,7 @@ function App() {
 			if (
 				isOperator(calculation.at(-1)) 
 				&& isDigit(calculation.at(-2)) 
-			) {
+				) {
 				if (event.target.value === '-') {
 					setCalculation([...calculation, event.target.value]);
 					setCanDecimal(true);
