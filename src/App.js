@@ -86,15 +86,22 @@ function App() {
 				return;
 			}
 			// if calc[-1] === operator && calc[-2] isDigit, 
-			// append minus, otherwise append nothing
+			// append minus, otherwise change last operator to new operator
 			if (
 				isOperator(calculation.at(-1)) 
 				&& isDigit(calculation.at(-2)) 
-				&& event.target.value === '-'
 			) {
-				setCalculation([...calculation, event.target.value]);
-				setCanDecimal(true);
-				return;
+				if (event.target.value === '-') {
+					setCalculation([...calculation, event.target.value]);
+					setCanDecimal(true);
+					return;
+				}
+				if (event.target.value !== '.') {
+					let newCalculation = calculation.slice(0, calculation.length - 1);
+					setCalculation([...newCalculation, event.target.value]);
+					setCanDecimal(true);
+					return;
+				}
 			}
 			// if calc[-1] !== operator, append operator
 			if (isDigit(calculation[calculation.length - 1])) {
